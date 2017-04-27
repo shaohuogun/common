@@ -1,17 +1,16 @@
 package org.shaohuogun.common;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.File;
+import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
 public abstract class Utility {
 	
-	public final static String UTF8 = "utf-8";
-	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	public final static String ENCODE_UTF8 = "utf-8";
+	
+	private final static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	
 	public static String getUUID() {
 		return UUID.randomUUID().toString();
@@ -19,53 +18,42 @@ public abstract class Utility {
 	
 	public static String formatDate(Date date) throws Exception {
 		if (date == null) {
-			throw new Exception("Invalid arguments.");
+			throw new NullPointerException("Date cann't be null.");
 		}
-		
+
 		return dateFormat.format(date);
 	}
 	
 	public static Date parseDate(String date) throws Exception {
 		if ((date == null) || date.isEmpty()) {
-			throw new Exception("Invalid arguments.");
+			throw new IllegalArgumentException("Date cann't be null or empty.");
 		}
 		
 		return dateFormat.parse(date);
 	}
 	
-	public static String trimInvalidChar(String fileName) {
-		fileName = fileName.replace("\\", "");
-		fileName = fileName.replace("/", "");
-		fileName = fileName.replace(":", "");
-		fileName = fileName.replace("*", "");
-		fileName = fileName.replace("?", "");
-		fileName = fileName.replace("\"", "");
-		fileName = fileName.replace("<", "");
-		fileName = fileName.replace(">", "");
-		fileName = fileName.replace("|", "");
-		// 前面的替换会产生空格,最后将其一并替换掉
-		fileName = fileName.replace(" ", "");
-		return fileName;
-	}
-	
-	public static String readFile(String path) throws Exception {
-		if ((path == null) || path.isEmpty()) {
-			throw new Exception("Invalid arguments.");
-		}
+    public static boolean isPathExists(String path) {
+        if ((path == null) || path.isEmpty()) {
+            throw new IllegalArgumentException("Path cann't be null or empty.");
+        }
 
-		StringBuffer sb = new StringBuffer();
-		InputStream is = new FileInputStream(path);
-		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-		String line = reader.readLine();
-		while (line != null) {
-			sb.append(line);
-			sb.append("\n");
-			line = reader.readLine();
+        return new File(path).exists();
+    }
+
+	public static String getMd5Code(byte[] source) throws Exception {
+		char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		md.update(source);
+		byte tmp[] = md.digest();
+		char str[] = new char[16 * 2];
+		int j = 0;
+		for (int i = 0; i < 16; i++) {
+			byte curByte = tmp[i];
+			str[j++] = hexDigits[curByte >>> 4 & 0xf];
+			str[j++] = hexDigits[curByte & 0xf];
 		}
 		
-		reader.close();
-		is.close();
-		return sb.toString();
+		return new String(str);
 	}
-
+	
 }

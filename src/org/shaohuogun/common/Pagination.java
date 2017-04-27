@@ -4,9 +4,12 @@ import java.util.List;
 
 public class Pagination {
 
+	public static final int DEFAULT_PAGE_SHOW = 9;
 	public static final int DEFAULT_PAGE_SIZE = 10;
 
 	private int total;
+	
+	private int pageShow = DEFAULT_PAGE_SHOW; 
 
 	private int pageSize = DEFAULT_PAGE_SIZE;
 
@@ -24,6 +27,10 @@ public class Pagination {
 		this.total = total;
 	}
 
+	public int getPageShow() {
+		return pageShow;
+	}
+	
 	public int getPageSize() {
 		return pageSize;
 	}
