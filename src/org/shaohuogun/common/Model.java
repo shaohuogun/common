@@ -7,6 +7,8 @@ public abstract class Model implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	public static final String FIELD_CREATOR = "creator";
+	
 	public static final Character DELETED_NOT = '0';
 	public static final Character DELETED_YES = '1';
 	
