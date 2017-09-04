@@ -3,11 +3,13 @@ package org.shaohuogun.common;
 import java.io.Serializable;
 import java.util.Date;
 
-public abstract class Model implements Serializable {
+public abstract class Entity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	public static final String FIELD_CREATOR = "creator";
+	
+	public static final String STATUS_INITIAL = "initial";
 	
 	public static final Character DELETED_NOT = '0';
 	public static final Character DELETED_YES = '1';
@@ -21,6 +23,8 @@ public abstract class Model implements Serializable {
 	private String lastModifier;
 	
 	private Date lastModifyDate;
+	
+	private String status = STATUS_INITIAL;
 	
 	private Character deleted = DELETED_NOT;
 
@@ -62,6 +66,14 @@ public abstract class Model implements Serializable {
 
 	public void setLastModifyDate(Date lastModifyDate) {
 		this.lastModifyDate = lastModifyDate;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Character getDeleted() {

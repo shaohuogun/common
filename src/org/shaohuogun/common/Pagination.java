@@ -17,7 +17,7 @@ public class Pagination {
 
 	private int pageIndex;
 
-	private List<Model> objects;
+	private List<Entity> objects;
 
 	public int getTotal() {
 		return total;
@@ -52,11 +52,11 @@ public class Pagination {
 		this.pageIndex = pageIndex;
 	}
 
-	public List<Model> getObjects() {
+	public List<Entity> getObjects() {
 		return objects;
 	}
 
-	public void setObjects(List<Model> objects) {
+	public void setObjects(List<Entity> objects) {
 		this.objects = objects;
 	}
 
